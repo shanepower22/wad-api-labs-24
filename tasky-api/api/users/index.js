@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
 
 // register(Create)/Authenticate User
 router.post('/', async (req, res) => {
+    try {
     if (req.query.action === 'register') {  //if action is 'register' then save to DB
         await User(req.body).save();
         res.status(201).json({
@@ -26,6 +27,14 @@ router.post('/', async (req, res) => {
             return res.status(200).json({ code: 200, msg: "Authentication Successful", token: 'TEMPORARY_TOKEN' });
         }
     }
+} catch (error) {
+    if (error.name === 'ValidationError') {
+        // Handle Mongoose validation errors
+        res.status(400).json({ code: 400, error: 'Validation Error', details: error.message });
+    } else {
+        next(error); // Pass other errors to the error handler
+    }
+}
 });
 
 // Update a user

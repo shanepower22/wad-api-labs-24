@@ -2,6 +2,8 @@ import './db';
 
 import dotenv from 'dotenv';
 import express from 'express';
+import cors from 'cors';
+
 
 import tasksRouter from './api/tasks';
 //... other imports
@@ -20,6 +22,8 @@ const errHandler = (err, req, res, next) => {
 const app = express();
 
 const port = process.env.PORT;
+// Enable CORS for all requests
+app.use(cors());
 
 app.use(express.json());
 
