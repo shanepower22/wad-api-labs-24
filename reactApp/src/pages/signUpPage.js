@@ -18,6 +18,7 @@ const SignUpPage = props => {
       setRegistered(true);
     }
   }
+  
 
   if (registered === true) {
     return <Navigate to="/login" />;
